@@ -43,7 +43,7 @@ inputLength:
 	addi $t1, $t1, 10
 	add $t4, $t4, $a0
 iterateThroughLength:
-	lb $t2, 0($a0)
+	lb $t2, 0($a0) # takes memory from $t2 and stores in $a0 
 	beqz $t2, foundLength
 	beq $t2, $t1, foundLength
 	addi $a0, $a0, 1
