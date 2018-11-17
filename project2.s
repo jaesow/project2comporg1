@@ -135,7 +135,7 @@ digitOne:
 	addi $a0, $a0, 1
 	j convertInput
 
-second_digit:
+digitTwo:
 	li $s6, 961
 	mult $s4, $s6
 	mflo $s7
@@ -143,3 +143,9 @@ second_digit:
 	addi $s0, $s0, -1
 	addi $a0, $a0, 1
 	j convertInput
+
+digitThree:
+	li $s6, 31 # (base N)^1
+	mult $s4, $s6
+	mflo $s7
+	add $t7, $t7, $s7
