@@ -108,3 +108,10 @@ convertInput:
 	bne $t6, $zero,upperBase33
 	slti $t6, $s4, 120
 	bne $t6, $zero, lowerBase33
+
+baseTen:
+	addi $s4, $s4, -48
+	j serialize
+
+upperBase33:
+	addi $s4, $s4, -55
