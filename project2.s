@@ -127,5 +127,12 @@ serialize:
 	beq $s0, $s5, digitFour
 
 digitOne:
-	li $s6, 29791 # (base N)^3
+	li $s6, 29791 
 	mult $s4, $s6
+	mflo $s7
+	add $t7, $t7, $s7
+	addi $s0, $s0, -1
+	addi $a0, $a0, 1
+	j convertInput
+
+second_digit:
