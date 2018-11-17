@@ -34,5 +34,14 @@ main:
 	li $a1, 250
 	syscall
 
+delete_FirstCharacter:
+	addi $a0, $a0, 1
+	j delete_LeftPadding
+
+delete_LeftPadding:
+	li $t8, 32
+ 
+
+
 
 		
