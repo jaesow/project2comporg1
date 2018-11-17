@@ -17,3 +17,12 @@
 		la $a0, inputIsEmpty
 		li $v0, 4
 		syscall
+		j exit
+
+	input_IsInvalid:
+		la $a0, inputIsInvalid
+		li $v0, 4
+		syscall
+		j exit
+
+		
