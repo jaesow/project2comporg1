@@ -56,7 +56,7 @@ iterateThroughLength:
 	beq $t2, $t1, foundLength
 	addi $a0, $a0, 1
 	addi $t0, $t0, 1
-	j iterateThroughLength
+	j iterateThroughLength # jump to interate through the length funtion
 
 #after found length 
 foundLength:
