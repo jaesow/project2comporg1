@@ -59,4 +59,14 @@ iterateThroughLength:
 	j iterateThroughLength
 
 
-		
+foundLength:
+	beqz $t0, input_IsEmpty
+	slti $t3, $t0, 5
+	beqz $t3, input_IsEmpty
+	move $a0, $t4
+	j reviewString
+
+reviewString:
+	lb $t5, 0($a0)
+	beqz $t5, prepForConvo
+	beq $t5, $t1, prepForConvo		
