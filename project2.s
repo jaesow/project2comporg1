@@ -115,3 +115,11 @@ baseTen:
 
 upperBase33:
 	addi $s4, $s4, -55
+	j serialize
+
+lowerBase33:
+	addi $s4, $s4, -87
+
+serialize:
+	beq $s0, $s3, digitOne
+
