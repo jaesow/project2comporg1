@@ -35,12 +35,18 @@ main:
 	syscall
 
 delete_FirstCharacter:
-	addi $a0, $a0, 1
-	j delete_LeftPadding
+	addi $a0, $a0, 1 # adds 1 to register $a0
+	j delete_LeftPadding # calls delete left paddding function 
 
 delete_LeftPadding:
 	li $t8, 32
- 
+	lb $t9, 0($a0)
+	beq $t8, $t9, delete_FirstCharacter
+	move $t9, $a0
+	j inputLength # jump to and run to inputLength function 
+
+inputLength:
+
 
 
 
