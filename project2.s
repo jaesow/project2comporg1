@@ -122,4 +122,10 @@ lowerBase33:
 
 serialize:
 	beq $s0, $s3, digitOne
+	beq $s0, $s2, digitTwo
+	beq $s0, $s1, digitThree
+	beq $s0, $s5, digitFour
 
+digitOne:
+	li $s6, 29791 # (base N)^3
+	mult $s4, $s6
