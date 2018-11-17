@@ -28,5 +28,11 @@
 		li $v0, 10
 		syscall
 
+main: 
+	li $v0, 8
+	la $a0, inputFromUser
+	li $a1, 250
+	syscall
+
 
 		
