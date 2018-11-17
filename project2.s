@@ -11,3 +11,9 @@
 		la $a0, inputIsLong
 		li $v0, 4
 		syscall
+		j exit
+
+	input_IsEmpty:
+		la $a0, inputIsEmpty
+		li $v0, 4
+		syscall
