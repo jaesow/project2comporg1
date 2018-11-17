@@ -98,8 +98,13 @@ prepForConvo:
 	li $s1, 1
 	li $s5, 0
 
-base_convert_input:
+convertInput:
 	lb $s4, 0($a0)
 	beqz $s4, print
 	beq $s4, $t1, print # compares the registries
 	slti $t6, $s4, 58
+	bne $t6, $zero, baseTen
+	slti $t6, $s4, 88
+	bne $t6, $zero,upperBase33
+	slti $t6, $s4, 120
+	bne $t6, $zero, lowerBase33
