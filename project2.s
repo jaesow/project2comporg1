@@ -86,7 +86,7 @@ reviewString:
 
 moveCharForward:
 	addi $a0, $a0, 1
-	j reviewString
+	j reviewString # jump tp reviewString function 
 
 # function thats prepares for conversion 
 prepForConvo:
