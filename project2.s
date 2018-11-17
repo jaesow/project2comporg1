@@ -46,7 +46,7 @@ delete_LeftPadding:
 	j inputLength # jump to and run to inputLength function 
 
 inputLength:
-	addi $t0, $t0, 0
+	addi $t0, $t0, 0 #  empty temp register $t0 makes emoty / gives null value
 	addi $t1, $t1, 10
 	add $t4, $t4, $a0
 
@@ -58,18 +58,18 @@ iterateThroughLength:
 	addi $t0, $t0, 1
 	j iterateThroughLength
 
-
+#after found length 
 foundLength:
-	beqz $t0, input_IsEmpty
+	beqz $t0, input_IsEmpty #compares
 	slti $t3, $t0, 5
 	beqz $t3, input_IsEmpty
 	move $a0, $t4
-	j reviewString
+	j reviewString # jump 
 
 reviewString:
 	lb $t5, 0($a0)
 	beqz $t5, prepForConvo
-	beq $t5, $t1, prepForConvo
+	beq $t5, $t1, prepForConvo # compares if equal 
 	slti $t6, $t5, 48
 	bne $t6, $zero, input_IsInvalid
 	slti $t6, $t5, 58
@@ -88,6 +88,7 @@ moveCharForward:
 	addi $a0, $a0, 1
 	j reviewString
 
+# function thats prepares for conversion 
 prepForConvo:
 	move $a0, $t4
 	addi $t7, $t7, 0
@@ -113,6 +114,7 @@ baseTen:
 	addi $s4, $s4, -48
 	j serialize
 
+#calculates conversions 
 upperBase33:
 	addi $s4, $s4, -55
 	j serialize
@@ -160,3 +162,8 @@ digitFour:
 	add $t7, $t7, $s7
 
 print:
+	li $v0, 1
+	move $a0, $t7
+	syscall
+
+j exit
