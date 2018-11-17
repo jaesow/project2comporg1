@@ -1,5 +1,4 @@
 #x = id number 02865424 so N = 27 + (02865424 % 10) N = 27 + 4 N = 31
-
 .data
 	
 	inputIsLong:    .asciiz "Input is too long."
@@ -12,13 +11,11 @@
 		li $v0, 4
 		syscall
 		j exit
-
 	input_IsEmpty:
 		la $a0, inputIsEmpty
 		li $v0, 4
 		syscall
 		j exit
-
 	input_IsInvalid:
 		la $a0, inputIsInvalid
 		li $v0, 4
@@ -27,29 +24,24 @@
 	exit:
 		li $v0, 10
 		syscall
-
 main: 
 	li $v0, 8
 	la $a0, inputFromUser
 	li $a1, 250
 	syscall
-
 delete_FirstCharacter:
 	addi $a0, $a0, 1 # adds 1 to register $a0
 	j delete_LeftPadding # calls delete left paddding function 
-
 delete_LeftPadding:
 	li $t8, 32
 	lb $t9, 0($a0)
 	beq $t8, $t9, delete_FirstCharacter
 	move $t9, $a0
 	j inputLength # jump to and run to inputLength function 
-
 inputLength:
 	addi $t0, $t0, 0 #  empty temp register $t0 makes emoty / gives null value
 	addi $t1, $t1, 10
 	add $t4, $t4, $a0
-
 iterateThroughLength:
 	lb $t2, 0($a0)
 	beqz $t2, foundLength
@@ -57,7 +49,6 @@ iterateThroughLength:
 	addi $a0, $a0, 1
 	addi $t0, $t0, 1
 	j iterateThroughLength # jump to interate through the length funtion
-
 #after found length 
 foundLength:
 	beqz $t0, input_IsEmpty #compares
@@ -65,7 +56,6 @@ foundLength:
 	beqz $t3, input_IsEmpty
 	move $a0, $t4
 	j reviewString # jump 
-
 reviewString:
 	lb $t5, 0($a0)
 	beqz $t5, prepForConvo
@@ -83,11 +73,9 @@ reviewString:
 	slti $t6, $t5, 118 
 	bne $t6, $zero, moveCharForward
 	bgt $t5, 119, input_IsInvalid   
-
 moveCharForward:
 	addi $a0, $a0, 1
 	j reviewString # jump tp reviewString function 
-
 # function thats prepares for conversion 
 prepForConvo:
 	move $a0, $t4
@@ -98,7 +86,6 @@ prepForConvo:
 	li $s2, 2
 	li $s1, 1
 	li $s5, 0
-
 convertInput:
 	lb $s4, 0($a0)
 	beqz $s4, print
@@ -109,25 +96,20 @@ convertInput:
 	bne $t6, $zero,upperBase33
 	slti $t6, $s4, 120
 	bne $t6, $zero, lowerBase33
-
 baseTen:
 	addi $s4, $s4, -48
-	j serialize
-
+	j serialize #  jump to serlialze function 
 #calculates conversions 
 upperBase33:
 	addi $s4, $s4, -55
 	j serialize
-
 lowerBase33:
 	addi $s4, $s4, -87
-
 serialize:
 	beq $s0, $s3, digitOne
 	beq $s0, $s2, digitTwo
 	beq $s0, $s1, digitThree
 	beq $s0, $s5, digitFour
-
 digitOne:
 	li $s6, 29791 
 	mult $s4, $s6
@@ -136,7 +118,6 @@ digitOne:
 	addi $s0, $s0, -1
 	addi $a0, $a0, 1
 	j convertInput
-
 digitTwo:
 	li $s6, 961
 	mult $s4, $s6
@@ -145,7 +126,6 @@ digitTwo:
 	addi $s0, $s0, -1
 	addi $a0, $a0, 1
 	j convertInput
-
 digitThree:
 	li $s6, 31 #
 	mult $s4, $s6
@@ -154,16 +134,13 @@ digitThree:
 	addi $s0, $s0, -1
 	addi $a0, $a0, 1
 	j convertInput # jump to convertInput base function 
-
 digitFour:
 	li $s6, 1
 	mult $s4, $s6
 	mflo $s7
 	add $t7, $t7, $s7
-
 print:
 	li $v0, 1
 	move $a0, $t7
 	syscall
-
 j exit
