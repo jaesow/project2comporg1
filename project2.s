@@ -79,4 +79,17 @@ reviewString:
 	slti $t6, $t5, 86                 
 	bne $t6, $zero, moveCharForward
 	slti $t6, $t5, 97
-	bne $t6, $zero, input_IsInvalid		
+	bne $t6, $zero, input_IsInvalid	
+	slti $t6, $t5, 118 
+	bne $t6, $zero, moveCharForward
+	bgt $t5, 119, input_IsInvalid   
+
+moveCharForward:
+	addi $a0, $a0, 1
+	j reviewString
+
+prepForConvo:
+	move $a0, $t4
+	addi $t7, $t7, 0
+	add $s0, $s0, $t0
+	
