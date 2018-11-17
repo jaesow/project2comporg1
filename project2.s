@@ -24,5 +24,9 @@
 		li $v0, 4
 		syscall
 		j exit
+	exit:
+		li $v0, 10
+		syscall
+
 
 		
