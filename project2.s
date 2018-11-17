@@ -75,4 +75,8 @@ reviewString:
 	slti $t6, $t5, 58
 	bne $t6, $zero, moveCharForward
 	slti $t6, $t5, 65
-		
+	bne $t6, $zero, input_IsInvalid
+	slti $t6, $t5, 86                 
+	bne $t6, $zero, moveCharForward
+	slti $t6, $t5, 97
+	bne $t6, $zero, input_IsInvalid		
