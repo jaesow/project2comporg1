@@ -69,4 +69,10 @@ foundLength:
 reviewString:
 	lb $t5, 0($a0)
 	beqz $t5, prepForConvo
-	beq $t5, $t1, prepForConvo		
+	beq $t5, $t1, prepForConvo
+	slti $t6, $t5, 48
+	bne $t6, $zero, input_IsInvalid
+	slti $t6, $t5, 58
+	bne $t6, $zero, moveCharForward
+	slti $t6, $t5, 65
+		
