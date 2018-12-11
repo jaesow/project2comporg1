@@ -1,32 +1,57 @@
+# need to ask the user for their input,(check) take that input and pass it to input is long, input is empty, input is invalid
+# test for a character that is longer than 4, invalid, and an empty string 
 #x = id number 02865424 so N = 27 + (02865424 % 10) N = 27 + 4 N = 31
 .data
-	
-	inputIsLong:    .asciiz "Input is too long."
+	newline:	.asciiz "\n"
+	inputIsLong:    .asciiz "Input is too long." #issue is that its counting the characters in this string
 	inputIsEmpty:   .asciiz "Input is empty"
-	inputFromUser:  .space 500
+	inputFromUser:  .asciiz "Enter characters with max value of 4: "
+	#.space 500 #take the value from the user and compare it with the space, if they match then its a space, if they dont match go tot the next condition
 	inputIsInvalid: .asciiz "Invalid base-N number." #if N i soutside of the parameters 0-9 etc. 
-.text
-	input_IsLong: 
-		la $a0, inputIsLong
-		li $v0, 4
-		syscall
-		j exit
-	input_IsEmpty:
-		la $a0, inputIsEmpty
-		li $v0, 4
-		syscall
-		j exit
-	input_IsInvalid:
-		la $a0, inputIsInvalid
-		li $v0, 4
-		syscall
-		j exit
-	exit:
-		li $v0, 10
-		syscall
-main: 
-	li $v0, 8
-	la $a0, inputFromUser
+	
+
+.text # build functions if statements in the main
+	main:	
+		input_FromUser:
+			la $a0, inputFromUser #takes "Enter characters with max value of 4: " and out it into $a0
+			li $v0, 4 # displays "Enter characters with max value of 4: "
+			syscall
+			# Get the user's input
+    			li $v0, 5
+			syscall
+			# Move the users input to $t0
+    			move $t0, $v0
+    			# move the users input from $t0 to register $a0 and prints it 
+			li $v0, 1
+			la $v0, newline
+			move $a0, $t0 # u5ser input is in register $a0
+
+    			
+		input_IsLong: 
+			la $a0, inputIsLong #value from the user input if its greater than 4 characters, than call the data inputIsLong
+			li $v0, 4
+			syscall
+			j exit
+			
+			
+		input_IsEmpty:
+			la $a0, inputIsEmpty
+			li $v0, 4
+			syscall
+			j exit
+		input_IsInvalid:
+			la $a0, inputIsInvalid
+			li $v0, 4
+			syscall
+			j exit
+		exit:
+			li $v0, 10
+			syscall
+		
+		li $v0, 8
+		# logic from inputfromuser.asm, gets input from user, store it into a register, and then check that registers value into  each of the fucntions 
+		#la $a0, inputFromUser
+		#if its empty prints "input is empty", if etc... logic, goes through with the function 
 	li $a1, 250
 	syscall
 delete_FirstCharacter:
@@ -38,27 +63,27 @@ delete_LeftPadding:
 	beq $t8, $t9, delete_FirstCharacter
 	move $t9, $a0
 	j inputLength # jump to and run to inputLength function 
-inputLength:
+inputLength: #counts what the user has bc if its more than 4, then its too long 
 	addi $t0, $t0, 0 #  empty temp register $t0 makes emoty / gives null value
 	addi $t1, $t1, 10
 	add $t4, $t4, $a0
-iterateThroughLength:
+iterateThroughLength: 
 	lb $t2, 0($a0) # takes memory from $t2 and stores in $a0 
-	beqz $t2, foundLength
+	beqz $t2, foundLength #compares register 2 with the foundlength 
 	beq $t2, $t1, foundLength
 	addi $a0, $a0, 1
 	addi $t0, $t0, 1
 	j iterateThroughLength # jump to interate through the length funtion
 #after found length 
 foundLength:
-	beqz $t0, input_IsEmpty #compares
+	beqz $t0, input_IsEmpty #compares, if statement in assembly (compare input is empty to tempary register, checking to see if t0 has a value) , if t0 is empty goes on to next line
 	slti $t3, $t0, 5
 	beqz $t3, input_IsEmpty
 	move $a0, $t4
 	j reviewString # jump 
 reviewString:
 	lb $t5, 0($a0)
-	beqz $t5, prepForConvo
+	beqz $t5, prepForConvo 
 	beq $t5, $t1, prepForConvo # compares if equal 
 	slti $t6, $t5, 48
 	bne $t6, $zero, input_IsInvalid
@@ -106,7 +131,7 @@ upperBase33:
 lowerBase33:
 	addi $s4, $s4, -87
 serialize:
-	beq $s0, $s3, digitOne
+	beq $s0, $s3, digitOne # beq = branch if equal so checking to see if the value stored in $s0 is equal to the value in $3
 	beq $s0, $s2, digitTwo
 	beq $s0, $s1, digitThree
 	beq $s0, $s5, digitFour
